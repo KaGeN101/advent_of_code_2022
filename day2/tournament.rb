@@ -7,9 +7,9 @@ left = {
     "C": "scissors"
 }
 right = {
-    "X": "scissors",
+    "X": "rock",
     "Y": "paper",
-    "Z": "rock"
+    "Z": "scissors"
 }
 
 score_per_round = {}
