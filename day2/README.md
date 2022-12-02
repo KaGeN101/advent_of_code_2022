@@ -2,9 +2,9 @@ A = Rock
 B = Paper
 C = Scissors
 
+X = Rock
 Y = Paper
-X = Scissors
-Z = Rock
+Z = Scissors
 
 Round Points = Shape you selected + Outcome of the round
 Shape you selected score:
