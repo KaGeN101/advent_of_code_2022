@@ -20,7 +20,7 @@ bag_number = 0
 File.foreach("input.txt") do |line| 
     bag_number += 1
     line.strip!
-    left_comp, right_comp = line.strip.chars.each_slice(line.length / 2).map(&:join)
+    left_comp, right_comp = line.chars.each_slice(line.length / 2).map(&:join)
     dup = find_duplicate left_comp, right_comp
     bags_duplicates << dup
     #puts "Bag: #{bag_number}"
