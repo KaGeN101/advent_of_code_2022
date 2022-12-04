@@ -27,3 +27,8 @@ Intresting line of code to break the bags up in two compartments:
 ```
 left_comp, right_comp = line.chars.each_slice(line.length / 2).map(&:join)
 ```
+
+## Day 4
+
+Tried doing the problem with datastructures first but it seemed that you would want to keep the sets in data structures with accessors  
+Then made encapsulated Models with operational functions to use on the lists and structures

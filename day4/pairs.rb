@@ -30,7 +30,7 @@ end
 
 class Pairs 
 
-    attr_reader :flattened
+    attr_reader :flattened, :only_as, :only_as_sorted, :only_bs
 
     def initialize()
                         # 49-51,31-50
@@ -43,8 +43,38 @@ class Pairs
         pair = Pair.new(number, range)
         @flattened[number] = pair
         @only_as << pair.flatten_a
+        @only_as_sorted = @only_as.sort_by(&:size)
         @only_bs << pair.flatten_b    
+        @only_as_sorted = @only_bs.sort_by(&:size)
     end    
+
+    def combine a, b
+        combined = []
+        combined = a + b
+        return combined
+    end
+    
+    def combine_sort a, b
+        combined = combine a, b
+        return combined.sort_by(&:size)
+    end
+
+    def save_flattened
+        to_write = ""
+        pairs.flattened.each do |number, pair|
+            to_write += "#{pair.flatten_set}\n"
+        end    
+        File.open('output_flattened.txt', 'w+') {|f| f.write(to_write)}
+    end 
+
+    def save name, array
+        to_write = ""
+        array.each do |flat|
+            to_write += "#{flat}\n"
+        end    
+        File.open("output_#{name}.txt", 'w+') {|f| f.write(to_write)}
+
+    end
 
 end
 
