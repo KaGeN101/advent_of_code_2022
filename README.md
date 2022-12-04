@@ -30,5 +30,11 @@ left_comp, right_comp = line.chars.each_slice(line.length / 2).map(&:join)
 
 ## Day 4
 
+Today's problem deffenatly went up a notch in complexity compared to the first few days
 Tried doing the problem with datastructures first but it seemed that you would want to keep the sets in data structures with accessors  
 Then made encapsulated Models with operational functions to use on the lists and structures
+ - Added sorting first when I miss understood the problem wrong. Thought everyone had to check everyone else not just each other
+ - So there extra functionality mehtods in the modelling layer that is not needed but is still easily possible to do thou
+ - The first part is wholly inclussion the second part is overlap. The former is harder to do than just checking for any overlap
+ - Applying the algorithm can definately be refactored. BUT it works :)
+ 
