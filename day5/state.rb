@@ -40,7 +40,7 @@ class State
         end
     end
 
-    def move instruction
+    def move instruction, is_9001=false
         col_from = instruction.from - 1
         row_top_from = get_row_top col_from
         to_move = []
@@ -50,12 +50,13 @@ class State
         end
         col_to = instruction.to - 1
         row_top_to = get_row_top col_to 
-        p instruction
-        puts row_top_to
         if row_top_to == -1
             row_top_to = 0
         else 
             row_top_to += 1
+        end
+        if is_9001
+            to_move = to_move.reverse
         end
         to_move.each do |crate|
             @yard[row_top_to][col_to] = crate
