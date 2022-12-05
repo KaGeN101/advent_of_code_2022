@@ -37,4 +37,10 @@ Then made encapsulated Models with operational functions to use on the lists and
  - So there extra functionality mehtods in the modelling layer that is not needed but is still easily possible to do thou
  - The first part is wholly inclussion the second part is overlap. The former is harder to do than just checking for any overlap
  - Applying the algorithm can definately be refactored. BUT it works :)
- 
+
+## Day 5
+
+The problems seem to becoming more and more modelling oriented. Want to start doing it in a language that is less model driven and
+more structure driven. 
+Using data modelling type constructs wiht, datastructures and map reduce type code yields much nicer solutions but are a lot harder to maintain. Yet just to know that I can do it I want to migrate to this.
+Alas, I digress, today was modelled again hahahaha
