@@ -7,6 +7,7 @@ fun main(args: Array<String>) {
     val inputData = lines[0].strip()
     println("Part 1: " + calculate.calculate(inputData, 4))
     println("Part 2: " + (calculate.calculate(inputData, 14) - 1) )
+    println("yay!!!!")
 
     // Try adding program arguments via Run/Debug configuration.
     // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
