@@ -44,3 +44,10 @@ The problems seem to becoming more and more modelling oriented. Want to start do
 more structure driven. 
 Using data modelling type constructs wiht, datastructures and map reduce type code yields much nicer solutions but are a lot harder to maintain. Yet just to know that I can do it I want to migrate to this.
 Alas, I digress, today was modelled again hahahaha
+
+## Day 6
+
+This problem was super easy
+ - I first solved it and then refactored it
+ - The second part needs to be one less (I guess it is because you not startin at 0)
+

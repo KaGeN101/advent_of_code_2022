@@ -1,40 +1,28 @@
 
-stream = File.read('input.txt')
+@stream = File.read('input.txt')
+@length = 0
 
-marker = ""
-length = 0
-stream.each_char do |char|
-    if marker.include? char
-        marker = ""
-        #puts "-=-=-=-=-=-="
-    end
-    marker += char
-    length += 1
-    #puts marker
-    if marker.length == 4
-        break
+def calculate start, size
+    marker = ""
+    (start..@stream.length).each do |index|
+        if marker.include? @stream[index]
+            marker = ""
+            #puts "-=-=-=-=-=-="
+        end
+        marker += @stream[index]
+        @length += 1
+        #puts marker
+        if marker.length == size
+            break
+        end
     end
 end
 
-puts length
-
+calculate @length, 4
+puts @length
 # Part 2
 puts "[][][][][][][][][Part 2][][][][][][][][][]"
-length = length - 4
-maker = ""
-# now go from length - 4
-(length .. stream.length).each do |index|
-    if marker.include? stream[index]
-        marker = ""
-        #puts "-=-=-=-=-=-="
-    end
-    marker += stream[index]
-    length += 1
-    #puts marker
-    if marker.length == 14
-        break
-    end
-end
-
-puts length-1
+@length = @length - 4
+calculate @length, 14
+puts @length-1
 
