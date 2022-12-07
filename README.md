@@ -51,3 +51,10 @@ This problem was super easy
  - I first solved it and then refactored it
  - The second part needs to be one less (I guess it is because you not startin at 0)
 
+## Day 7
+
+Well we now know where my weakness is. Directory structures or trees with depth first structures (this is probably quite a few engineers struggle to be honest, it is not something you work with often enough)
+Today's problem was constructing a tree of drectories and files in a depth first fashion and then for 
+ - Part 1: Calculating the total size that can be saved for directories less than size 100000
+ - Part 2: Which file is just bigger than the `1609574` of disk space you need
+
