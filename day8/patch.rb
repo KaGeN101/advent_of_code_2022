@@ -103,33 +103,29 @@ class Patch
         return total
     end
 
+    def determine_is_visible tree
+        visible_up = check_all_lower_row -1, tree
+        #puts "vissible_up: #{visible_up}"
+        visible_right = check_all_lower_col 1, tree
+        #puts "vissible_right: #{visible_right}"
+        visible_down = check_all_lower_row 1, tree
+        #puts "vissible_down: #{visible_down}"
+        visible_left = check_all_lower_col -1, tree
+        #puts "vissible_left: #{visible_left}"
+        if visible_up || visible_right || visible_down || visible_left
+            tree.set_is_visible true
+        else 
+            tree.set_is_visible false
+        end
+    end 
+
     def determine_visible
         #@is_visible = @up.height < @height || @right.height < @height || @down.height < @height || @left.height < @height
         # Just focus on the middle block
         (1..@height-2).each do |r|
             (1..@width-2).each do |c|
                 tree = @patch[r][c]
-                vissible_up = tree.up.height < tree.height
-                vissible_right = tree.right.height < tree.height
-                vissible_down = tree.down.height < tree.height
-                vissible_left = tree.left.height < tree.height
-                if !vissible_up && !vissible_right && !vissible_down && !vissible_left
-                    next
-                end
-                if vissible_up
-                    vissible_up = check_to_edge_row -1, tree
-                end
-                if vissible_right
-                    vissible_up = check_to_edge_col 1, tree
-                end
-                if vissible_down
-                    vissible_up = check_to_edge_row 1, tree
-                end
-                if vissible_right
-                    vissible_up = check_to_edge_col -1, tree
-                end
-                vissilbe = vissible_up || vissible_right || vissible_down || vissible_left
-                tree.set_is_visible vissilbe
+                determine_is_visible tree
             end
         end
     end 
@@ -163,19 +159,43 @@ class Patch
         return patch_st
     end
 
+    def draw_visible
+        patch_st = ""
+        (0..@height-1).each do |r|
+            (0..@width-1).each do |c|
+                if @patch[r][c].is_edge || @patch[r][c].is_visible
+                    if @patch[r][c].is_edge 
+                        patch_st += "e"
+                    else
+                        patch_st += "v"
+                    end
+                else 
+                    patch_st += " "
+                end
+            end
+            patch_st += "\n"
+        end
+        puts patch_st
+        return patch_st
+    end
+
     #private 
 
-    def check_to_edge_row direction, tree
+    def check_all_lower_row direction, tree
         if direction == -1
-            (tree.row.downto(0)).each do |row|
-                if @patch[row][tree.col].height > tree.height
+            ((tree.row - 1).downto(0)).each do |row|
+                if @patch[row][tree.col].height < tree.height
+                    next 
+                else
                     return false
                 end
             end
         end 
         if direction == 1
-            (tree.row.upto(@height-1)).each do |row|
-                if @patch[row][tree.col].height > tree.height
+            ((tree.row + 1).upto(@height-1)).each do |row|
+                if @patch[row][tree.col].height < tree.height
+                    next 
+                else
                     return false
                 end
             end
@@ -183,22 +203,26 @@ class Patch
         return true
     end
 
-    def check_to_edge_col direction, tree
+    def check_all_lower_col direction, tree
         if direction == -1
-            (tree.col.downto(0)).each do |col|
-                if @patch[tree.row][col].height > tree.height
+            ((tree.col - 1).downto(0)).each do |col|
+                if @patch[tree.row][col].height < tree.height
+                    next 
+                else
                     return false
                 end
             end
-        end
+        end 
         if direction == 1
-            (tree.col..@width-1).each do |col|
-                if @patch[tree.row][col].height > tree.height
+            ((tree.col + 1).upto(@width-1)).each do |col|
+                if @patch[tree.row][col].height < tree.height
+                    next 
+                else
                     return false
                 end
             end
-        end
-        return true
+        end 
+        return true 
     end
 
 end 

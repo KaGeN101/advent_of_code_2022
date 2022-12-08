@@ -29,6 +29,7 @@ class TestPatch < Test::Unit::TestCase
     patch.parse(sample_patch.split("\n"))
     patch.walk
     patch.determine_visible
+    assert_equal(true, patch.determine_is_visible(patch.get(1, 1)))
     assert_equal(true, patch.get(1, 2).is_visible)
     assert_equal(false, patch.get(3, 3).is_visible)
   end
@@ -42,6 +43,8 @@ class TestPatch < Test::Unit::TestCase
     assert_equal(5, patch.get_total_visible)
     # Test total visible
     assert_equal(21, patch.get_total_edge + patch.get_total_visible)
+    puts "\n"
+    patch.draw_visible
   end
  
 end
