@@ -1,7 +1,7 @@
 
 class Tree
 
-    attr_reader :row, :col, :height, :is_edge, :is_visible, :up, :right, :down, :left
+    attr_reader :row, :col, :height, :is_edge, :is_visible, :up, :right, :down, :left, :viewing
 
     def initialize(row, col, height, is_edge)
         @row = row
@@ -24,6 +24,10 @@ class Tree
 
     def set_is_visible visible
         @is_visible = visible
+    end
+
+    def set_viewing viewing
+        @viewing = viewing
     end
     
     def print
@@ -49,6 +53,8 @@ class Tree
 end
 
 class Patch
+
+    attr_reader :width, :height
 
     def initialize(width, height)
         @width = width
@@ -105,19 +111,24 @@ class Patch
 
     def determine_is_visible tree
         visible_up = check_all_lower_row -1, tree
-        #puts "vissible_up: #{visible_up}"
         visible_right = check_all_lower_col 1, tree
-        #puts "vissible_right: #{visible_right}"
         visible_down = check_all_lower_row 1, tree
-        #puts "vissible_down: #{visible_down}"
         visible_left = check_all_lower_col -1, tree
-        #puts "vissible_left: #{visible_left}"
         if visible_up || visible_right || visible_down || visible_left
             tree.set_is_visible true
         else 
             tree.set_is_visible false
         end
     end 
+
+    def determine_viewing_distance tree
+        view_up = look_up_down -1, tree
+        view_right = look_left_right 1, tree
+        view_down = look_up_down 1, tree
+        view_left = look_left_right -1, tree
+
+        tree.set_viewing view_up * view_right * view_down * view_left
+    end
 
     def determine_visible
         #@is_visible = @up.height < @height || @right.height < @height || @down.height < @height || @left.height < @height
@@ -126,6 +137,7 @@ class Patch
             (1..@width-2).each do |c|
                 tree = @patch[r][c]
                 determine_is_visible tree
+                determine_viewing_distance tree
             end
         end
     end 
@@ -180,6 +192,62 @@ class Patch
     end
 
     #private 
+
+    def look_up_down direction, tree
+        number = 0
+        # up
+        if direction == -1
+            ((tree.row - 1).downto(0)).each do |row|
+                if @patch[row][tree.col].height < tree.height
+                    number += 1
+                else
+                    number += 1
+                    break
+                end
+            end
+        end
+        # down
+        if direction == 1
+            if direction == 1
+                ((tree.row + 1).upto(@height-1)).each do |row|
+                    if @patch[row][tree.col].height < tree.height
+                        number += 1
+                     else 
+                        number += 1
+                        break
+                     end
+                end
+            end
+        end
+        return number
+    end 
+
+    def look_left_right direction, tree
+        number = 0
+        # left
+        if direction == -1
+            ((tree.col - 1).downto(0)).each do |col|
+                if @patch[tree.row][col].height < tree.height
+                    number += 1
+                else
+                    number += 1
+                    break
+                end
+            end
+        end
+        # right
+        if direction == 1
+            ((tree.col + 1).upto(@width-1)).each do |col|
+                if @patch[tree.row][col].height < tree.height
+                    number += 1 
+                else
+                    number += 1
+                    break
+                end
+            end
+        end
+        return number
+    end
 
     def check_all_lower_row direction, tree
         if direction == -1

@@ -46,5 +46,15 @@ class TestPatch < Test::Unit::TestCase
     puts "\n"
     patch.draw_visible
   end
+
+  def test_viewing
+    sample_patch = "30373\n25512\n65332\n33549\n35390"
+    patch = Patch.new(5, 5)
+    patch.parse(sample_patch.split("\n"))
+    patch.walk
+    patch.determine_visible
+    assert_equal(8, patch.get(3, 2).viewing)
+    assert_equal(4, patch.get(1, 2).viewing)
+  end 
  
 end
