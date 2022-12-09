@@ -58,3 +58,43 @@ Today's problem was constructing a tree of drectories and files in a depth first
  - Part 1: Calculating the total size that can be saved for directories less than size 100000
  - Part 2: Which file is just bigger than the `1609574` of disk space you need
 
+
+## Day 8
+
+
+## Day 9
+
+One of those again where it is moving around a board. There seems to be way to many checks in my current attempt
+It does not feel right to have to check so many things for it to work
+Need to figure out how to make this type of alogorithms mroe elegant or soemthing this does look and feel wrong
+ie 
+```
+if direction == "R"
+    if @previous == nil || @previous == @current
+        return @bridge[@tail[:row]][@tail[:col] + 1] == nil
+    end
+    if @previous == "U"
+        return @bridge[@tail[:row] - 1][@tail[:col] + 1] == nil
+    end
+    if @previous == "D"
+        #/|\
+        if tail[:row] < @bridge.size - 1 && @tail[:col] > 0
+            left = @bridge[@tail[:row] + 1][@tail[:col] - 1] == nil
+        else 
+            left = false
+        end
+        if @tail[:row] < @height - 1
+            below = @bridge[@tail[:row] + 1][@tail[:col]] == nil
+        else 
+            below = false
+        end
+        if tail[:row] < @bridge.size - 1 && @tail[:col] < width - 1
+            right = @bridge[@tail[:row] + 1][@tail[:col] + 1] == nil
+        else 
+            right = false
+        end
+        return left && below && right 
+    end    
+end
+```
+

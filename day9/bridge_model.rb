@@ -32,6 +32,8 @@ class Bridge
             if has_gap direction
                 # move tail
                 move_tail direction
+            else 
+                put @tail
             end
             draw
             puts "\n"
@@ -45,48 +47,91 @@ class Bridge
     def has_gap direction
         if direction == "U"
             if @previous == nil || @previous == @current
-                puts "U"
                 return @bridge[@tail[:row] - 1][@tail[:col]] == nil
             end
             if @previous == "R"
-                puts "UR"
                 return @bridge[@tail[:row] - 1][@tail[:col] + 1] == nil
+            end
+            if @previous == "L"
+                return @bridge[@tail[:row] - 1][@tail[:col] - 1] == nil
             end
         end
         if direction == "R"
             if @previous == nil || @previous == @current
                 return @bridge[@tail[:row]][@tail[:col] + 1] == nil
             end
+            if @previous == "U"
+                return @bridge[@tail[:row] - 1][@tail[:col] + 1] == nil
+            end
             if @previous == "D"
                 #/|\
-                left = @bridge[@tail[:row] + 1][@tail[:col] - 1] == nil
-                below = @bridge[@tail[:row] + 1][@tail[:col]] == nil
-                right = @bridge[@tail[:row] + 1][@tail[:col] + 1] == nil
+                if tail[:row] < @bridge.size - 1 && @tail[:col] > 0
+                    left = @bridge[@tail[:row] + 1][@tail[:col] - 1] == nil
+                else 
+                    left = false
+                end
+                if @tail[:row] < @height - 1
+                    below = @bridge[@tail[:row] + 1][@tail[:col]] == nil
+                else 
+                    below = false
+                end
+                if tail[:row] < @bridge.size - 1 && @tail[:col] < width - 1
+                    right = @bridge[@tail[:row] + 1][@tail[:col] + 1] == nil
+                else 
+                    right = false
+                end
                 return left && below && right 
             end    
         end
         if direction == "D"
             if @previous == nil || @previous == @current
-                return @bridge[@tail[:row] + 1][@tail[:col]] == nil
+                if @tail[:row] < @height - 1
+                    return @bridge[@tail[:row] + 1][@tail[:col]] == nil
+                else
+                    return false
+                end
+            end
+            if @previous == "R"
+                if @tail[:row] < @height - 1 && @tail[:col] < width - 1 
+                    return @bridge[@tail[:row] + 1][@tail[:col] + 1] == nil
+                else
+                    return false
+                end
             end
             if @previous == "L"
-                return @bridge[@tail[:row] + 1][@tail[:col] - 1] == nil
+                if @tail[:col] > 0
+                    return @bridge[@tail[:row] + 1][@tail[:col] - 1] == nil
+                else
+                    return false
+                end 
             end
         end    
         if direction == "L"
             if @previous == nil || @previous == @current
                 return @bridge[@tail[:row]][@tail[:col] - 1] == nil
             end
-            if @previous == "D"
-                #/|\
-                left = @bridge[@tail[:row] + 1][@tail[:col] - 1] == nil
-                below = @bridge[@tail[:row] + 1][@tail[:col]] == nil
-                right = @bridge[@tail[:row] + 1][@tail[:col] + 1] == nil
-                return left && below && right 
-            end 
             if @previous == "U"
                 return @bridge[@tail[:row] - 1][@tail[:col] - 1] == nil
             end
+            if @previous == "D"
+                #/|\
+                if @tail[:row] < @height - 1 && tail[:col] > 0 
+                    left = @bridge[@tail[:row] + 1][@tail[:col] - 1] == nil
+                else
+                    left = false
+                end
+                if @tail[:row] < @height - 1
+                    below = @bridge[@tail[:row] + 1][@tail[:col]] == nil
+                else
+                    below = false
+                end
+                if @tail[:row] < @height - 1 && tail[:col] < @width - 1 
+                    right = @bridge[@tail[:row] + 1][@tail[:col] + 1] == nil
+                else
+                    right = false
+                end
+                return left && below && right 
+            end 
         end 
     end
             
@@ -95,16 +140,24 @@ class Bridge
         @current = direction
         @bridge[@head[:row]][@head[:col]] = nil
         if direction == "U"
-            @head[:row] = @head[:row] - 1
+            if @head[:row] > 0
+                @head[:row] = @head[:row] - 1
+            end
         end
         if direction == "R"
-            @head[:col] = @head[:col] + 1
+            if @head[:col] < @width - 1
+                @head[:col] = @head[:col] + 1
+            end
         end
         if direction == "D"
-            @head[:row] = @head[:row] + 1
+            if @head[:row] < @height - 1
+                @head[:row] = @head[:row] + 1
+            end
         end
         if direction == "L"
-            @head[:col] = @head[:col] - 1
+            if @head[:col] > 0
+                @head[:col] = @head[:col] - 1
+            end
         end
         put @head
         @current = direction
